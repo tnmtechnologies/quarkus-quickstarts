@@ -12,16 +12,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.acme.rest.json.Fruit.Family;
+
 @Path("/fruits")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class FruitResource {
 
-    private Set<Fruit> fruits = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+    private final Set<Fruit> fruits = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
 
     public FruitResource() {
-        fruits.add(new Fruit("Apple", "Winter fruit"));
-        fruits.add(new Fruit("Pineapple", "Tropical fruit"));
+        fruits.add(new Fruit("Apple", "Winter fruit", Family.SIMPLE));
+        fruits.add(new Fruit("Pineapple", "Tropical fruit", Family.COMPLEX));
+        fruits.add(new Fruit("Unknown", "Unknown fruit", Family._4TEST));
     }
 
     @GET
@@ -30,13 +33,13 @@ public class FruitResource {
     }
 
     @POST
-    public Set<Fruit> add(Fruit fruit) {
+    public Set<Fruit> add(final Fruit fruit) {
         fruits.add(fruit);
         return fruits;
     }
 
     @DELETE
-    public Set<Fruit> delete(Fruit fruit) {
+    public Set<Fruit> delete(final Fruit fruit) {
         fruits.removeIf(existingFruit -> existingFruit.name.contentEquals(fruit.name));
         return fruits;
     }

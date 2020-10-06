@@ -19,23 +19,27 @@ public class FruitResourceTest {
                 .when().get("/fruits")
                 .then()
                 .statusCode(200)
-                .body("$.size()", is(2),
-                        "name", containsInAnyOrder("Apple", "Pineapple"),
-                        "description", containsInAnyOrder("Winter fruit", "Tropical fruit"));
+                .body("$.size()", is(3),
+                        "name", containsInAnyOrder("Apple", "Pineapple", "Unknown"),
+                        "description", containsInAnyOrder("Winter fruit", "Tropical fruit", "Unknown fruit"),
+                        "family", containsInAnyOrder("simple", "complex", "4test")
+                        );
     }
 
     @Test
     public void testAdd() {
         given()
-                .body("{\"name\": \"Pear\", \"description\": \"Winter fruit\"}")
+                .body("{\"name\": \"Pear\", \"description\": \"Winter fruit\", \"family\": \"simple\" , \"families\": [ \"simple\" ]  }" )
                 .header("Content-Type", MediaType.APPLICATION_JSON)
                 .when()
                 .post("/fruits")
                 .then()
                 .statusCode(200)
-                .body("$.size()", is(3),
-                        "name", containsInAnyOrder("Apple", "Pineapple", "Pear"),
-                        "description", containsInAnyOrder("Winter fruit", "Tropical fruit", "Winter fruit"));
+                .body("$.size()", is(4),
+                        "name", containsInAnyOrder("Apple", "Pineapple", "Pear", "Unknown"),
+                        "description", containsInAnyOrder("Winter fruit", "Tropical fruit", "Winter fruit", "Unknown fruit"),
+                        "family", containsInAnyOrder("simple", "complex", "4test", "simple")
+                        );
 
         given()
                 .body("{\"name\": \"Pear\", \"description\": \"Winter fruit\"}")
@@ -44,8 +48,10 @@ public class FruitResourceTest {
                 .delete("/fruits")
                 .then()
                 .statusCode(200)
-                .body("$.size()", is(2),
-                        "name", containsInAnyOrder("Apple", "Pineapple"),
-                        "description", containsInAnyOrder("Winter fruit", "Tropical fruit"));
+                .body("$.size()", is(3),
+                        "name", containsInAnyOrder("Apple", "Pineapple", "Unknown"),
+                        "description", containsInAnyOrder("Winter fruit", "Tropical fruit", "Unknown fruit"),
+                        "family", containsInAnyOrder("simple", "complex", "4test")
+                        );
     }
 }

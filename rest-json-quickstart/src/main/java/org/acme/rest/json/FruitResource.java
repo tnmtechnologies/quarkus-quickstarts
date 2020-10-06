@@ -1,6 +1,8 @@
 package org.acme.rest.json;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -22,9 +24,9 @@ public class FruitResource {
     private final Set<Fruit> fruits = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
 
     public FruitResource() {
-        fruits.add(new Fruit("Apple", "Winter fruit", Family.SIMPLE));
-        fruits.add(new Fruit("Pineapple", "Tropical fruit", Family.COMPLEX));
-        fruits.add(new Fruit("Unknown", "Unknown fruit", Family._4TEST));
+        fruits.add(new Fruit("Apple", "Winter fruit", Family.SIMPLE, new HashSet<>(Arrays.asList(Family.SIMPLE))));
+        fruits.add(new Fruit("Pineapple", "Tropical fruit", Family.COMPLEX, null));
+        fruits.add(new Fruit("Unknown", "Unknown fruit", Family._4TEST, new HashSet<>(Arrays.asList(Family._4TEST))));
     }
 
     @GET

@@ -30,7 +30,7 @@ public class Fruit {
         this.families = families;
     }
 
-    @javax.json.bind.annotation.JsonbTypeAdapter(Family.BeanAdapter.class)
+    @javax.json.bind.annotation.JsonbTypeAdapter(Family.FamilyJsonbAdapter.class)
     public enum Family {
         AGGREGATE("aggregate")
         , SIMPLE("simple")
@@ -65,7 +65,7 @@ public class Fruit {
 
 
         @javax.ws.rs.ext.Provider
-        static public class BeanAdapter implements JsonbAdapter<Family, String> {
+        static public class FamilyJsonbAdapter implements JsonbAdapter<Family, String> {
 
             @Override
             public String adaptToJson(final Family e) throws Exception {

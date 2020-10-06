@@ -16,7 +16,7 @@ public class Fruit {
     public String name;
     public String description;
     public Family family;
-    @JsonbTypeAdapter(Family.BeanAdapter2.class)
+    @JsonbTypeAdapter(Family.FamiliesJsonbAdapter.class)
     public Set<Family> families = null;
 
     public Fruit() {
@@ -80,7 +80,7 @@ public class Fruit {
           }
 
         @Provider
-        static public class BeanAdapter2 implements JsonbAdapter<Set<Family>, JsonArray> {
+        static public class FamiliesJsonbAdapter implements JsonbAdapter<Set<Family>, JsonArray> {
 
             @Override
             public JsonArray adaptToJson(final Set<Family> e) throws Exception {
